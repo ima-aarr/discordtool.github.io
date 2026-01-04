@@ -3,783 +3,387 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discord ToolKit Pro</title>
+    <title>Discord Ultimate Toolkit</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap');
+
         :root {
-            --bg-primary: #313338;
-            --bg-secondary: #2b2d31;
-            --bg-tertiary: #1e1f22;
-            --accent: #5865f2;
-            --accent-hover: #4752c4;
-            --text-normal: #dbdee1;
-            --text-muted: #949ba4;
-            --border: #1e1f22;
+            --aurora-1: #4e54c8;
+            --aurora-2: #8f94fb;
+            --aurora-3: #ad5389;
+            --aurora-4: #3d3393;
         }
 
         body {
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-normal);
+            background: linear-gradient(-45deg, var(--aurora-1), var(--aurora-2), var(--aurora-3), var(--aurora-4));
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: #ffffff;
+            height: 100vh;
+            margin: 0;
             overflow: hidden;
         }
 
-        
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
-        ::-webkit-scrollbar-thumb { background: #1a1b1e; border-radius: 4px; }
-        ::-webkit-scrollbar-corner { background: transparent; }
-
-        
-        .card {
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.5rem;
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .input-field {
-            background-color: var(--bg-tertiary);
-            border: 1px solid var(--bg-tertiary);
-            color: var(--text-normal);
-            padding: 0.5rem 0.75rem;
-            border-radius: 4px;
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+
+        .input-pro {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 6px;
             width: 100%;
-            outline: none;
-            transition: border-color 0.2s ease;
-            font-size: 0.9rem;
-        }
-
-        .input-field:focus { border-color: #00a8fc; }
-
-        .btn {
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: background-color 0.2s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .btn-primary { background-color: var(--accent); color: white; }
-        .btn-primary:hover { background-color: var(--accent-hover); }
-        
-        .btn-secondary { background-color: #4e5058; color: white; }
-        .btn-secondary:hover { background-color: #6d6f78; }
-
-        .nav-item {
-            padding: 0.75rem 1rem;
-            border-radius: 4px;
-            color: var(--text-muted);
             transition: all 0.2s;
-            cursor: pointer;
+            font-size: 14px;
         }
 
-        .nav-item:hover { background-color: #35373c; color: var(--text-normal); }
-        .nav-item.active { background-color: #404249; color: white; border-left: 3px solid var(--accent); }
+        .input-pro:focus {
+            border-color: var(--aurora-2);
+            outline: none;
+            background: rgba(0, 0, 0, 0.4);
+        }
 
-        
-        input[type=range] {
-            -webkit-appearance: none;
-            width: 100%;
-            background: transparent;
-        }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 14px;
-            width: 14px;
-            border-radius: 50%;
-            background: var(--accent);
-            margin-top: -5px;
+        .nav-link {
+            padding: 12px 16px;
+            border-radius: 8px;
             cursor: pointer;
+            transition: 0.2s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255, 255, 255, 0.7);
         }
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 4px;
-            background: #4e5058;
-            border-radius: 2px;
+
+        .nav-link:hover { background: rgba(255, 255, 255, 0.1); color: white; }
+        .nav-link.active { background: rgba(255, 255, 255, 0.15); color: white; font-weight: 700; border-left: 4px solid #fff; }
+
+        .custom-scroll::-webkit-scrollbar { width: 5px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
+
+        .btn-send {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: transform 0.1s, filter 0.2s;
         }
+        .btn-send:hover { filter: brightness(1.2); }
+        .btn-send:active { transform: scale(0.98); }
     </style>
 </head>
-<body class="flex h-screen">
+<body class="flex">
 
-    <nav class="w-64 bg-[#1e1f22] flex flex-col shadow-lg border-r border-[#1e1f22] z-10">
-        <div class="p-6 border-b border-[#2b2d31]">
-            <h1 class="text-lg font-bold text-white tracking-wide flex items-center">
-                <i class="fab fa-discord mr-3 text-[#5865f2]"></i> TOOLKIT PRO
+    <nav class="w-72 h-screen p-6 flex flex-col glass m-2">
+        <div class="mb-10 px-2">
+            <h1 class="text-xl font-bold tracking-tighter flex items-center gap-3">
+                <i class="fab fa-discord"></i> TOOLKIT ULTIMATE
             </h1>
+            <p class="text-[10px] opacity-50 mt-1 font-mono uppercase">Professional Edition v3.0</p>
         </div>
-        <div class="flex-grow p-3 space-y-1 overflow-y-auto">
-            <div onclick="app.switchTab('embed')" class="nav-item active" id="nav-embed">
-                <i class="fas fa-terminal w-6"></i> Embed Builder
-            </div>
-            <div onclick="app.switchTab('canvas')" class="nav-item" id="nav-canvas">
-                <i class="fas fa-layer-group w-6"></i> Image Generator
-            </div>
-            <div onclick="app.switchTab('perms')" class="nav-item" id="nav-perms">
-                <i class="fas fa-calculator w-6"></i> Permission Calc
-            </div>
-            <div class="border-t border-[#2b2d31] my-2"></div>
-            <div onclick="app.switchTab('utils')" class="nav-item" id="nav-utils">
-                <i class="fas fa-tools w-6"></i> Utilities
-            </div>
+
+        <div class="flex-grow space-y-2">
+            <div onclick="App.route('embed')" id="nav-embed" class="nav-link active"><i class="fas fa-edit"></i> Embed ビルダー</div>
+            <div onclick="App.route('canvas')" id="nav-canvas" class="nav-link"><i class="fas fa-magic"></i> 画像生成</div>
+            <div onclick="App.route('perms')" id="nav-perms" class="nav-link"><i class="fas fa-key"></i> 権限計算</div>
+            <div onclick="App.route('utils')" id="nav-utils" class="nav-link"><i class="fas fa-layer-group"></i> ユーティリティ</div>
         </div>
-        <div class="p-4 text-xs text-[#5865f2] text-center font-mono bg-[#191a1d]">
-            v2.0.0 Stable
+
+        <div class="pt-6 border-t border-white/10">
+            <button onclick="App.clearStorage()" class="text-xs opacity-50 hover:opacity-100 transition"><i class="fas fa-sync mr-2"></i>設定をリセット</button>
         </div>
     </nav>
 
-    <main class="flex-grow bg-[#313338] relative overflow-hidden flex flex-col">
-        
-        <section id="tab-embed" class="tab-content h-full flex flex-col p-6 overflow-y-auto">
-            <header class="flex justify-between items-center mb-6 shrink-0">
-                <h2 class="text-xl font-bold text-white">Embed Message Builder</h2>
-                <div class="flex gap-2">
-                    <button onclick="embedManager.importJSON()" class="btn btn-secondary text-xs"><i class="fas fa-file-import mr-2"></i>Import</button>
-                    <button onclick="embedManager.exportJSON()" class="btn btn-secondary text-xs"><i class="fas fa-copy mr-2"></i>Copy JSON</button>
-                    <button onclick="embedManager.reset()" class="btn btn-secondary text-xs bg-red-900 hover:bg-red-800"><i class="fas fa-trash mr-2"></i>Reset</button>
-                </div>
-            </header>
+    <main class="flex-grow h-screen p-2 overflow-hidden relative">
+        <div class="h-full glass custom-scroll overflow-y-auto p-8">
+            
+            <section id="view-embed" class="view-content space-y-8">
+                <div class="grid grid-cols-1 xl:grid-cols-[1fr_450px] gap-8">
+                    <div class="space-y-6">
+                        <header>
+                            <h2 class="text-2xl font-bold">Embed Builder</h2>
+                            <p class="text-sm opacity-60">Webhookを使用して高度なメッセージを送信します</p>
+                        </header>
 
-            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 flex-grow">
-                <div class="space-y-4 overflow-y-auto pr-2 pb-10">
-                    <div class="card space-y-3">
-                        <label class="text-xs font-bold text-gray-400 uppercase tracking-wider">Webhook Settings</label>
-                        <input type="password" id="webhook-url" placeholder="https://discord.com/api/webhooks/..." class="input-field" onchange="app.saveState()">
-                        <div class="grid grid-cols-2 gap-3">
-                            <input type="text" id="bot-name" placeholder="Bot Name" class="input-field" oninput="embedManager.update()">
-                            <input type="text" id="bot-avatar" placeholder="Avatar URL" class="input-field" oninput="embedManager.update()">
-                        </div>
-                    </div>
-
-                    <div class="card space-y-3">
-                        <label class="text-xs font-bold text-gray-400 uppercase tracking-wider">Embed Content</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="emb-author" placeholder="Author Name" class="input-field" oninput="embedManager.update()">
-                            <input type="color" id="emb-color" value="#5865f2" class="h-9 w-12 bg-transparent cursor-pointer rounded" oninput="embedManager.update()">
-                        </div>
-                        <input type="text" id="emb-title" placeholder="Title" class="input-field font-bold" oninput="embedManager.update()">
-                        <div class="relative">
-                            <textarea id="emb-desc" placeholder="Description (Markdown & ANSI supported)" class="input-field h-32 font-mono text-sm leading-relaxed" oninput="embedManager.update()"></textarea>
-                            <div class="absolute bottom-2 right-2 flex gap-1 opacity-70 hover:opacity-100 transition">
-                                <button onclick="embedManager.insertMention('user')" class="text-[10px] bg-gray-700 px-2 py-1 rounded text-white hover:bg-gray-600">@User</button>
-                                <button onclick="embedManager.insertMention('role')" class="text-[10px] bg-gray-700 px-2 py-1 rounded text-white hover:bg-gray-600">@Role</button>
+                        <div class="space-y-4">
+                            <input type="password" id="wb-url" placeholder="Webhook URL" class="input-pro">
+                            <div class="grid grid-cols-2 gap-4">
+                                <input type="text" id="wb-name" placeholder="Bot名 (任意)" class="input-pro">
+                                <input type="text" id="wb-avatar" placeholder="アイコンURL (任意)" class="input-pro">
                             </div>
                         </div>
-                    </div>
 
-                    <div class="card space-y-3">
-                        <label class="text-xs font-bold text-gray-400 uppercase tracking-wider">Assets & Footer</label>
-                        <div class="grid grid-cols-2 gap-3">
-                            <input type="text" id="emb-thumb" placeholder="Thumbnail URL (Top-Right)" class="input-field" oninput="embedManager.update()">
-                            <input type="text" id="emb-image" placeholder="Image URL (Bottom)" class="input-field" oninput="embedManager.update()">
-                        </div>
-                        <div class="grid grid-cols-[1fr_auto] gap-3 pt-2 border-t border-[#3f4147]">
-                            <input type="text" id="emb-footer-text" placeholder="Footer Text" class="input-field" oninput="embedManager.update()">
-                            <input type="text" id="emb-footer-icon" placeholder="Icon URL" class="input-field w-32" oninput="embedManager.update()">
-                        </div>
-                    </div>
-
-                    <button onclick="embedManager.send()" class="btn btn-primary w-full py-3 shadow-lg">
-                        <i class="fas fa-paper-plane mr-2"></i> Send to Discord
-                    </button>
-                </div>
-
-                <div class="bg-[#313338] rounded-lg border border-[#1e1f22] p-4 flex flex-col h-fit sticky top-0 shadow-2xl">
-                    <h3 class="text-xs font-bold text-gray-500 uppercase mb-3">Live Preview</h3>
-                    <div class="flex items-start gap-3 select-none">
-                        <img id="prev-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" class="w-10 h-10 rounded-full bg-gray-600 object-cover">
-                        <div class="flex-grow min-w-0">
-                            <div class="flex items-baseline gap-2">
-                                <span id="prev-name" class="font-medium text-white hover:underline cursor-pointer">Bot Name</span>
-                                <span class="bg-[#5865f2] text-white text-[10px] px-1.5 rounded-[3px] h-[15px] flex items-center leading-none">BOT</span>
-                                <span class="text-xs text-[#949ba4] ml-1">Today at 12:00 PM</span>
+                        <div class="space-y-4 pt-4 border-t border-white/10">
+                            <div class="flex gap-4">
+                                <input type="text" id="em-title" placeholder="タイトル" class="input-pro font-bold">
+                                <input type="color" id="em-color" value="#5865f2" class="w-16 h-10 bg-transparent border-none cursor-pointer">
                             </div>
-                            
-                            <div class="mt-1 bg-[#2b2d31] rounded-[4px] border-l-4 grid max-w-[520px]" id="prev-body" style="border-color: #5865f2; padding: 12px;">
-                                <div class="grid gap-2">
-                                    <div class="flex gap-4">
-                                        <div class="flex-grow min-w-0 grid gap-1.5">
-                                            <div id="prev-author" class="text-sm font-bold text-white hidden"></div>
-                                            <div id="prev-title" class="text-base font-bold text-[#00a8fc] hover:underline cursor-pointer hidden"></div>
-                                            <div id="prev-desc" class="text-sm text-[#dbdee1] whitespace-pre-wrap break-words leading-relaxed hidden font-sans"></div>
-                                        </div>
-                                        <img id="prev-thumb" class="w-20 h-20 rounded object-cover hidden">
+                            <textarea id="em-desc" placeholder="説明文 (Markdown利用可能)" class="input-pro h-48 resize-none"></textarea>
+                            <div class="grid grid-cols-2 gap-4">
+                                <input type="text" id="em-img" placeholder="メイン画像URL" class="input-pro">
+                                <input type="text" id="em-thumb" placeholder="サムネイルURL" class="input-pro">
+                            </div>
+                        </div>
+
+                        <button onclick="Embed.send()" class="btn-send w-full py-4 rounded-xl font-bold text-lg shadow-2xl">
+                            Discordへ送信
+                        </button>
+                    </div>
+
+                    <div class="relative">
+                        <div class="sticky top-0 space-y-4">
+                            <label class="text-xs font-bold uppercase tracking-widest opacity-50">Preview</label>
+                            <div class="bg-[#313338] p-4 rounded-lg shadow-2xl flex gap-4 pointer-events-none text-left">
+                                <img id="pv-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" class="w-10 h-10 rounded-full shrink-0">
+                                <div class="flex-grow min-w-0">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span id="pv-name" class="font-medium text-white truncate text-sm">Bot</span>
+                                        <span class="bg-[#5865f2] text-[10px] px-1 rounded text-white font-bold">BOT</span>
+                                        <span class="text-[11px] text-[#949ba4]">Today at 12:00 PM</span>
                                     </div>
-                                    <img id="prev-image" class="mt-2 rounded max-w-full hidden object-cover">
-                                    <div id="prev-footer-container" class="flex items-center gap-2 pt-2 hidden">
-                                        <img id="prev-footer-icon" class="w-5 h-5 rounded-full hidden">
-                                        <span id="prev-footer-text" class="text-xs text-[#949ba4] font-medium"></span>
+                                    <div id="pv-border" class="bg-[#2b2d31] border-l-4 rounded p-3 max-w-[432px]" style="border-color: #5865f2;">
+                                        <div id="pv-title" class="text-sm font-bold text-[#00a8fc] mb-1 hidden"></div>
+                                        <div id="pv-desc" class="text-[13px] text-[#dbdee1] whitespace-pre-wrap leading-snug"></div>
+                                        <img id="pv-img" class="mt-3 rounded max-w-full hidden border border-white/5">
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="tab-canvas" class="tab-content hidden h-full p-6 overflow-y-auto">
-            <header class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold text-white">Image Generator</h2>
-                <button onclick="canvasManager.download()" class="btn btn-primary text-xs"><i class="fas fa-download mr-2"></i>Download PNG</button>
-            </header>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <div class="lg:col-span-4 space-y-4">
-                    <div class="card p-4">
-                        <label class="text-xs text-gray-400 block mb-2 font-bold">PRESETS</label>
-                        <div class="grid grid-cols-3 gap-2">
-                            <button onclick="canvasManager.loadPreset('welcome')" class="btn btn-secondary text-xs">Welcome</button>
-                            <button onclick="canvasManager.loadPreset('banner')" class="btn btn-secondary text-xs">Banner</button>
-                            <button onclick="canvasManager.loadPreset('youtube')" class="btn btn-secondary text-xs">Thumbnail</button>
-                        </div>
-                    </div>
-
-                    <div class="card space-y-4">
-                        <div class="space-y-2">
-                            <p class="font-bold text-sm text-white border-b border-gray-700 pb-1">Background</p>
-                            <input type="file" id="cv-bg-file" accept="image/*" class="text-xs text-gray-400 w-full" onchange="canvasManager.handleFile(this, 'bg')">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs text-gray-400">Fill Color</span>
-                                <input type="color" id="cv-bg-color" value="#2b2d31" class="h-6 w-8 rounded border-none" oninput="canvasManager.draw()">
-                            </div>
-                        </div>
-
-                        <div class="space-y-2">
-                            <p class="font-bold text-sm text-white border-b border-gray-700 pb-1">Avatar / Icon</p>
-                            <input type="file" id="cv-icon-file" accept="image/*" class="text-xs text-gray-400 w-full" onchange="canvasManager.handleFile(this, 'icon')">
-                            <div class="grid grid-cols-[auto_1fr] gap-3 items-center">
-                                <span class="text-xs text-gray-500 w-8">Size</span>
-                                <input type="range" id="cv-icon-size" min="50" max="400" value="150" oninput="canvasManager.draw()">
-                            </div>
-                            <div class="grid grid-cols-[auto_1fr] gap-3 items-center">
-                                <span class="text-xs text-gray-500 w-8">X</span>
-                                <input type="range" id="cv-icon-x" min="0" max="100" value="15" oninput="canvasManager.draw()">
-                            </div>
-                            <div class="grid grid-cols-[auto_1fr] gap-3 items-center">
-                                <span class="text-xs text-gray-500 w-8">Y</span>
-                                <input type="range" id="cv-icon-y" min="0" max="100" value="50" oninput="canvasManager.draw()">
-                            </div>
-                        </div>
-
-                        <div class="space-y-2">
-                            <p class="font-bold text-sm text-white border-b border-gray-700 pb-1">Typography</p>
-                            <input type="text" id="cv-text-main" value="WELCOME" class="input-field mb-2" oninput="canvasManager.draw()">
-                            <input type="text" id="cv-text-sub" value="USER NAME" class="input-field mb-2" oninput="canvasManager.draw()">
-                            <div class="flex gap-2">
-                                <input type="color" id="cv-text-color" value="#ffffff" class="h-8 w-full rounded cursor-pointer" oninput="canvasManager.draw()">
-                                <select id="cv-font" class="input-field text-xs" onchange="canvasManager.draw()">
-                                    <option value="Inter, sans-serif">Sans Serif</option>
-                                    <option value="serif">Serif</option>
-                                    <option value="monospace">Mono</option>
-                                </select>
-                            </div>
-                            <div class="grid grid-cols-[auto_1fr] gap-3 items-center mt-2">
-                                <span class="text-xs text-gray-500 w-8">X</span>
-                                <input type="range" id="cv-text-x" min="0" max="100" value="40" oninput="canvasManager.draw()">
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="Embed.exportJSON()" class="glass p-2 text-xs rounded hover:bg-white/10">JSONをコピー</button>
+                                <button onclick="Embed.importJSON()" class="glass p-2 text-xs rounded hover:bg-white/10">JSONを読込</button>
                             </div>
                         </div>
                     </div>
                 </div>
+            </section>
 
-                <div class="lg:col-span-8 flex items-center justify-center bg-[#191a1d] rounded-lg border border-[#1e1f22] p-4 overflow-hidden relative">
-                    <canvas id="mainCanvas" class="shadow-2xl max-w-full h-auto rounded border border-[#2b2d31]"></canvas>
+            <section id="view-canvas" class="view-content hidden space-y-8 text-center">
+                <header class="text-left">
+                    <h2 class="text-2xl font-bold">Asset Generator</h2>
+                    <p class="text-sm opacity-60">ウェルカム画像やバナーを数秒で生成します</p>
+                </header>
+                <div class="inline-block p-4 glass shadow-2xl">
+                    <canvas id="main-cv" width="800" height="400" class="max-w-full rounded-lg"></canvas>
                 </div>
-            </div>
-        </section>
+                <div class="max-w-2xl mx-auto grid grid-cols-2 gap-4">
+                    <input type="text" id="cv-text" value="WELCOME" class="input-pro" placeholder="メインテキスト">
+                    <input type="color" id="cv-t-color" value="#ffffff" class="w-full h-10 bg-transparent border-none">
+                    <button onclick="Canvas.export()" class="btn-send col-span-2 py-3 rounded-lg font-bold">画像をダウンロード (PNG)</button>
+                </div>
+            </section>
 
-        <section id="tab-perms" class="tab-content hidden h-full p-6 overflow-y-auto">
-            <h2 class="text-xl font-bold text-white mb-6">Permission Calculator</h2>
-            
-            <div class="card mb-6 border-l-4 border-[#5865f2]">
-                <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                    <div class="w-full">
-                        <label class="text-xs text-gray-400 font-bold block mb-1">CALCULATED VALUE</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="perm-value" value="0" readonly class="font-mono text-xl text-[#00a8fc] bg-transparent border-none outline-none w-full" onclick="this.select()">
-                        </div>
-                    </div>
-                    <div class="w-full md:w-auto flex flex-col items-end gap-2">
-                         <div class="flex gap-2">
-                            <input type="text" id="perm-decoder" placeholder="Paste value to decode" class="input-field w-48 font-mono text-xs">
-                            <button onclick="permManager.decode()" class="btn btn-secondary text-xs">Decode</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mt-4 pt-4 border-t border-gray-700 flex items-center gap-3">
-                    <span class="text-sm font-bold text-gray-300">Invite Generator:</span>
-                    <input type="text" id="client-id" placeholder="Application ID" class="input-field w-48 text-xs">
-                    <button onclick="permManager.generateLink()" class="btn btn-primary text-xs">Generate URL</button>
-                </div>
-                <div id="invite-output" class="mt-2 text-xs font-mono text-[#00a8fc] break-all hidden cursor-pointer hover:underline" onclick="utils.copy(this.innerText)"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 select-none" id="perm-grid">
-                </div>
-        </section>
-
-        <section id="tab-utils" class="tab-content hidden h-full p-6 overflow-y-auto">
-            <h2 class="text-xl font-bold text-white mb-6">Utilities</h2>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="card">
-                    <h3 class="font-bold text-white mb-4 border-b border-gray-700 pb-2">Timestamp Generator</h3>
-                    <div class="space-y-4">
-                        <input type="datetime-local" id="ts-input" class="input-field">
-                        <div class="grid grid-cols-2 gap-2">
-                            <select id="ts-format" class="input-field">
-                                <option value="R">Relative (e.g. 5 mins ago)</option>
-                                <option value="t">Short Time (12:00 PM)</option>
-                                <option value="T">Long Time (12:00:00 PM)</option>
-                                <option value="d">Short Date (01/01/2024)</option>
-                                <option value="D">Long Date (January 1, 2024)</option>
-                                <option value="f">Short Date/Time</option>
-                                <option value="F">Long Date/Time</option>
-                            </select>
-                            <button onclick="utils.generateTimestamp()" class="btn btn-primary">Generate</button>
-                        </div>
-                        <div id="ts-result" class="bg-black/50 p-3 rounded font-mono text-[#00a8fc] text-center text-sm cursor-pointer hover:bg-black/70 transition" onclick="utils.copy(this.innerText)">
-                            Result will appear here
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3 class="font-bold text-white mb-4 border-b border-gray-700 pb-2">Dictionary</h3>
-                    <div class="space-y-4">
+            <section id="view-perms" class="view-content hidden">
+                <div class="max-w-4xl mx-auto space-y-6">
+                    <div class="glass p-8 flex justify-between items-center">
                         <div>
-                            <p class="text-xs text-gray-400 mb-2 font-bold">DECORATION</p>
-                            <div class="flex flex-wrap gap-2">
-                                <button onclick="utils.copy('╔════════╗')" class="btn btn-secondary font-mono text-xs">╔══╗ Box</button>
-                                <button onclick="utils.copy('────────────────')" class="btn btn-secondary font-mono text-xs">── Line</button>
-                                <button onclick="utils.copy('>>> ')" class="btn btn-secondary font-mono text-xs">>>> Quote</button>
-                                <button onclick="utils.copy('```\n\n```')" class="btn btn-secondary font-mono text-xs">``` Code</button>
-                            </div>
+                            <span class="text-xs opacity-50 font-bold uppercase">計算された整数値</span>
+                            <div id="perm-res" class="text-5xl font-mono font-bold tracking-tighter text-white">0</div>
                         </div>
-                        <div>
-                            <p class="text-xs text-gray-400 mb-2 font-bold">INVISIBLE</p>
-                            <div class="flex flex-wrap gap-2">
-                                <button onclick="utils.copy('‎')" class="btn btn-secondary text-xs">Empty (‎)</button>
-                                <button onclick="utils.copy(' ')" class="btn btn-secondary text-xs">Fig Space</button>
-                            </div>
-                        </div>
+                        <input type="text" id="perm-dec" placeholder="値をデコード" class="input-pro w-48 font-mono text-center" oninput="Perms.decode()">
+                    </div>
+                    <div id="perm-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+                </div>
+            </section>
+
+            <section id="view-utils" class="view-content hidden">
+                <div class="max-w-2xl mx-auto space-y-8">
+                    <div class="glass p-6 space-y-4">
+                        <h3 class="font-bold border-b border-white/10 pb-2">Discord タイムスタンプ</h3>
+                        <input type="datetime-local" id="ts-in" class="input-pro">
+                        <select id="ts-type" class="input-pro">
+                            <option value="R">相対時間 (5分前)</option>
+                            <option value="F">日付と時刻 (2026年1月4日 20:00)</option>
+                            <option value="d">短い日付 (2026/01/04)</option>
+                        </select>
+                        <div onclick="Utils.copyTS()" id="ts-res" class="bg-black/30 p-4 rounded-lg font-mono text-[#00a8fc] text-center cursor-pointer hover:bg-black/50 transition">クリックしてコピー</div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+        </div>
     </main>
 
     <script>
-        /**
-         * Core Application Logic
-         * Designed for modularity and performance
-         */
-        const app = {
-            state: {},
-            
-            init() {
-                this.loadState();
-                embedManager.init();
-                canvasManager.init();
-                permManager.init();
-                this.switchTab('embed');
-            },
-
-            switchTab(id) {
-                document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-                document.getElementById(`tab-${id}`).classList.remove('hidden');
-                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        const App = {
+            route(id) {
+                document.querySelectorAll('.view-content').forEach(v => v.classList.add('hidden'));
+                document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+                document.getElementById(`view-${id}`).classList.remove('hidden');
                 document.getElementById(`nav-${id}`).classList.add('active');
             },
-
-            saveState() {
-                // ほぞん
-                const data = {};
-                document.querySelectorAll('input[type="text"], input[type="password"], textarea').forEach(el => {
-                    if (el.id) data[el.id] = el.value;
-                });
-                localStorage.setItem('dc_toolkit_state', JSON.stringify(data));
-            },
-
-            loadState() {
-                try {
-                    const data = JSON.parse(localStorage.getItem('dc_toolkit_state'));
-                    if (!data) return;
-                    Object.keys(data).forEach(key => {
-                        const el = document.getElementById(key);
-                        if (el) el.value = data[key];
-                    });
-                } catch (e) { console.error('State load error', e); }
-            }
-        };
-
-        const embedManager = {
-            update() {
-                app.saveState();
-                const getVal = (id) => document.getElementById(id).value;
-                const setVal = (id, val) => {
-                    const el = document.getElementById(id);
-                    if (val) {
-                        el.classList.remove('hidden');
-                        if (id === 'prev-desc') el.innerHTML = this.parseMarkdown(val);
-                        else if (el.tagName === 'IMG') el.src = val;
-                        else el.innerText = val;
-                    } else {
-                        el.classList.add('hidden');
-                    }
-                };
-
-                
-                document.getElementById('prev-name').innerText = getVal('bot-name') || 'Bot Name';
-                const avatar = getVal('bot-avatar');
-                if (avatar) document.getElementById('prev-avatar').src = avatar;
-
-                
-                setVal('prev-author', getVal('emb-author'));
-                setVal('prev-title', getVal('emb-title'));
-                setVal('prev-desc', getVal('emb-desc'));
-                setVal('prev-thumb', getVal('emb-thumb'));
-                setVal('prev-image', getVal('emb-image'));
-                
-                document.getElementById('prev-body').style.borderColor = getVal('emb-color');
-
-                
-                const fText = getVal('emb-footer-text');
-                const fIcon = getVal('emb-footer-icon');
-                if (fText || fIcon) {
-                    document.getElementById('prev-footer-container').classList.remove('hidden');
-                    document.getElementById('prev-footer-text').innerText = fText;
-                    const fiEl = document.getElementById('prev-footer-icon');
-                    if (fIcon) { fiEl.src = fIcon; fiEl.classList.remove('hidden'); }
-                    else fiEl.classList.add('hidden');
-                } else {
-                    document.getElementById('prev-footer-container').classList.add('hidden');
-                }
-            },
-
-            parseMarkdown(text) {
-                if (!text) return '';
-                
-                return text
-                    .replace(/</g, '&lt;').replace(/>/g, '&gt;')
-                    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
-                    .replace(/`([^`]+)`/g, '<code class="bg-[#1e1f22] px-1 rounded text-sm font-mono">$1</code>')
-                    .replace(/\n/g, '<br>')
-                    // ANSI Colors (Basic)
-                    .replace(/```ansi\n([\s\S]*?)```/g, (match, content) => {
-                        const colored = content
-                            .replace(/\x1b\[31m/g, '<span class="text-red-400">')
-                            .replace(/\x1b\[32m/g, '<span class="text-green-400">')
-                            .replace(/\x1b\[34m/g, '<span class="text-blue-400">')
-                            .replace(/\x1b\[33m/g, '<span class="text-yellow-400">')
-                            .replace(/\x1b\[0m/g, '</span>');
-                        return `<div class="bg-[#1e1f22] p-2 rounded text-xs font-mono overflow-x-auto my-1">${colored}</div>`;
-                    });
-            },
-
-            async send() {
-                const url = document.getElementById('webhook-url').value;
-                if (!url) return alert('Webhook URL is required.');
-
-                const payload = this.buildPayload();
-                try {
-                    const res = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (res.ok) alert('Sent successfully.');
-                    else alert(`Error: ${res.status}`);
-                } catch (e) { alert(`Network Error: ${e}`); }
-            },
-
-            buildPayload() {
-                const getVal = (id) => document.getElementById(id).value;
-                const embed = {
-                    title: getVal('emb-title'),
-                    description: getVal('emb-desc'),
-                    color: parseInt(getVal('emb-color').replace('#', ''), 16),
-                    url: undefined,
-                    author: getVal('emb-author') ? { name: getVal('emb-author') } : undefined,
-                    thumbnail: getVal('emb-thumb') ? { url: getVal('emb-thumb') } : undefined,
-                    image: getVal('emb-image') ? { url: getVal('emb-image') } : undefined,
-                    footer: getVal('emb-footer-text') ? { text: getVal('emb-footer-text'), icon_url: getVal('emb-footer-icon') } : undefined
-                };
-                
-                
-                Object.keys(embed).forEach(key => embed[key] === undefined && delete embed[key]);
-
-                return {
-                    username: getVal('bot-name') || undefined,
-                    avatar_url: getVal('bot-avatar') || undefined,
-                    embeds: [embed]
-                };
-            },
-
-            exportJSON() {
-                const json = JSON.stringify(this.buildPayload(), null, 2);
-                utils.copy(json);
-            },
-
-            importJSON() {
-                const str = prompt("Paste JSON payload here:");
-                if (!str) return;
-                try {
-                    const data = JSON.parse(str);
-                    const emb = data.embeds ? data.embeds[0] : {};
-                    
-                    const set = (id, val) => { if(val) document.getElementById(id).value = val; };
-                    
-                    if(data.username) set('bot-name', data.username);
-                    if(data.avatar_url) set('bot-avatar', data.avatar_url);
-                    
-                    if(emb.title) set('emb-title', emb.title);
-                    if(emb.description) set('emb-description', emb.description);
-                    if(emb.color) document.getElementById('emb-color').value = '#' + emb.color.toString(16).padStart(6, '0');
-                    if(emb.author) set('emb-author', emb.author.name);
-                    if(emb.thumbnail) set('emb-thumb', emb.thumbnail.url);
-                    if(emb.image) set('emb-image', emb.image.url);
-                    if(emb.footer) {
-                        set('emb-footer-text', emb.footer.text);
-                        set('emb-footer-icon', emb.footer.icon_url);
-                    }
-                    this.update();
-                } catch(e) { alert('Invalid JSON format'); }
-            },
-
-            insertMention(type) {
-                const area = document.getElementById('emb-desc');
-                const text = type === 'user' ? '<@ID>' : '<@&ID>';
-                const start = area.selectionStart;
-                const end = area.selectionEnd;
-                area.value = area.value.substring(0, start) + text + area.value.substring(end);
-                this.update();
-            },
-
-            reset() {
-                if(!confirm('Clear all embed fields?')) return;
-                document.querySelectorAll('#tab-embed input:not(#webhook-url), #tab-embed textarea').forEach(e => e.value = '');
-                this.update();
-            },
-            
-            init() { 
-                document.querySelectorAll('#tab-embed input, #tab-embed textarea').forEach(el => {
-                    el.addEventListener('input', () => this.update());
-                });
-                
-                setTimeout(() => this.update(), 100); 
-            }
-        };
-
-        const canvasManager = {
-            ctx: null,
-            canvas: null,
-            assets: { bg: null, icon: null },
-
             init() {
-                this.canvas = document.getElementById('mainCanvas');
-                this.ctx = this.canvas.getContext('2d');
-                this.loadPreset('welcome');
+                Embed.init();
+                Perms.init();
+                Canvas.init();
+                this.load();
+                setInterval(() => this.save(), 2000);
             },
-
-            loadPreset(type) {
-                if (type === 'welcome') {
-                    this.setupCanvas(700, 300);
-                    this.setParams({ tx: 'WELCOME', sub: 'To the server', cx: 15, cy: 50, tx_x: 40 });
-                } else if (type === 'banner') {
-                    this.setupCanvas(600, 240);
-                    this.setParams({ tx: 'SERVER BANNER', sub: 'Official Discord', cx: 50, cy: 50, tx_x: 50 });
-                } else {
-                    this.setupCanvas(1280, 720);
-                    this.setParams({ tx: 'VIDEO TITLE', sub: 'Subtitle Here', cx: 85, cy: 80, tx_x: 10 });
+            save() {
+                const data = {};
+                document.querySelectorAll('input, textarea, select').forEach(el => {
+                    if (el.id && el.type !== 'file' && el.type !== 'password') data[el.id] = el.value;
+                });
+                localStorage.setItem('discord_ultimate_state', JSON.stringify(data));
+            },
+            load() {
+                const saved = localStorage.getItem('discord_ultimate_state');
+                if (!saved) return;
+                const data = JSON.parse(saved);
+                Object.keys(data).forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.value = data[id];
+                });
+                Embed.update();
+                Canvas.draw();
+            },
+            clearStorage() {
+                if(confirm('設定をリセットしますか？')) {
+                    localStorage.removeItem('discord_ultimate_state');
+                    location.reload();
                 }
+            }
+        };
+
+        const Embed = {
+            init() {
+                ['wb-name', 'wb-avatar', 'em-title', 'em-desc', 'em-color', 'em-img'].forEach(id => {
+                    document.getElementById(id).addEventListener('input', () => this.update());
+                });
+            },
+            update() {
+                const get = (id) => document.getElementById(id).value;
+                document.getElementById('pv-name').innerText = get('wb-name') || 'Bot';
+                document.getElementById('pv-avatar').src = get('wb-avatar') || 'https://cdn.discordapp.com/embed/avatars/0.png';
+                
+                const titleEl = document.getElementById('pv-title');
+                if(get('em-title')) {
+                    titleEl.innerText = get('em-title');
+                    titleEl.classList.remove('hidden');
+                } else titleEl.classList.add('hidden');
+
+                document.getElementById('pv-desc').innerText = get('em-desc');
+                document.getElementById('pv-border').style.borderColor = get('em-color');
+
+                const imgEl = document.getElementById('pv-img');
+                if(get('em-img')) {
+                    imgEl.src = get('em-img');
+                    imgEl.classList.remove('hidden');
+                } else imgEl.classList.add('hidden');
+            },
+            async send() {
+                const url = document.getElementById('wb-url').value;
+                if(!url) return alert('Webhook URLを入力してください');
+                
+                const payload = {
+                    username: document.getElementById('wb-name').value || undefined,
+                    avatar_url: document.getElementById('wb-avatar').value || undefined,
+                    embeds: [{
+                        title: document.getElementById('em-title').value || undefined,
+                        description: document.getElementById('em-desc').value || undefined,
+                        color: parseInt(document.getElementById('em-color').value.replace('#',''), 16),
+                        image: document.getElementById('em-img').value ? { url: document.getElementById('em-img').value } : undefined
+                    }]
+                };
+
+                try {
+                    const res = await fetch(url, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
+                    alert(res.ok ? '送信成功' : '送信失敗: ' + res.status);
+                } catch(e) { alert(e); }
+            },
+            exportJSON() {
+                const payload = { embeds: [{ title: document.getElementById('em-title').value, description: document.getElementById('em-desc').value }] };
+                navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
+                alert('JSONをコピーしました');
+            }
+        };
+
+        const Canvas = {
+            ctx: null,
+            init() {
+                this.ctx = document.getElementById('main-cv').getContext('2d');
+                document.getElementById('cv-text').addEventListener('input', () => this.draw());
+                document.getElementById('cv-t-color').addEventListener('input', () => this.draw());
                 this.draw();
             },
-
-            setupCanvas(w, h) {
-                this.canvas.width = w;
-                this.canvas.height = h;
-            },
-
-            setParams(p) {
-                const set = (id, v) => document.getElementById(id).value = v;
-                set('cv-text-main', p.tx);
-                set('cv-text-sub', p.sub);
-                set('cv-icon-x', p.cx); // %
-                set('cv-icon-y', p.cy); // %
-                set('cv-text-x', p.tx_x); // %
-            },
-
-            handleFile(input, type) {
-                const file = input.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = new Image();
-                    img.onload = () => { this.assets[type] = img; this.draw(); };
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            },
-
             draw() {
                 const ctx = this.ctx;
-                const w = this.canvas.width;
-                const h = this.canvas.height;
-                const getVal = (id) => document.getElementById(id).value;
-
+                const grd = ctx.createLinearGradient(0, 0, 800, 400);
+                grd.addColorStop(0, "#4e54c8");
+                grd.addColorStop(1, "#ad5389");
+                ctx.fillStyle = grd;
+                ctx.fillRect(0, 0, 800, 400);
                 
-                ctx.fillStyle = getVal('cv-bg-color');
-                ctx.fillRect(0, 0, w, h);
-                if (this.assets.bg) {
-                    // Object-fit: cover implementation
-                    const scale = Math.max(w / this.assets.bg.width, h / this.assets.bg.height);
-                    const x = (w / 2) - (this.assets.bg.width / 2) * scale;
-                    const y = (h / 2) - (this.assets.bg.height / 2) * scale;
-                    ctx.drawImage(this.assets.bg, x, y, this.assets.bg.width * scale, this.assets.bg.height * scale);
-                }
+                ctx.fillStyle = "rgba(0,0,0,0.3)";
+                ctx.fillRect(40, 40, 720, 320);
 
-                // Icon (Circle)
-                if (this.assets.icon) {
-                    const size = parseInt(getVal('cv-icon-size'));
-                    const x = (parseInt(getVal('cv-icon-x')) / 100) * w;
-                    const y = (parseInt(getVal('cv-icon-y')) / 100) * h;
-                    
-                    ctx.save();
-                    ctx.beginPath();
-                    ctx.arc(x, y, size / 2, 0, Math.PI * 2);
-                    ctx.closePath();
-                    ctx.clip();
-                    ctx.drawImage(this.assets.icon, x - size / 2, y - size / 2, size, size);
-                    ctx.restore();
-                    
-                    // ぼーだー
-                    ctx.beginPath();
-                    ctx.arc(x, y, size / 2, 0, Math.PI * 2);
-                    ctx.lineWidth = 5;
-                    ctx.strokeStyle = '#ffffff';
-                    ctx.stroke();
-                }
-
-                
-                const txX = (parseInt(getVal('cv-text-x')) / 100) * w;
-                const textColor = getVal('cv-text-color');
-                const fontStack = getVal('cv-font');
-                
-                ctx.fillStyle = textColor;
-                ctx.shadowColor = 'rgba(0,0,0,0.6)';
-                ctx.shadowBlur = 8;
-                ctx.textAlign = 'left';
-                ctx.textBaseline = 'middle';
-
-                
-                ctx.font = `bold ${h * 0.15}px ${fontStack}`;
-                ctx.fillText(getVal('cv-text-main'), txX, h * 0.45);
-
-                
-                ctx.font = `${h * 0.08}px ${fontStack}`;
-                ctx.fillText(getVal('cv-text-sub'), txX, h * 0.6);
-
-                ctx.shadowBlur = 0;
+                ctx.fillStyle = document.getElementById('cv-t-color').value;
+                ctx.font = "bold 80px Inter";
+                ctx.textAlign = "center";
+                ctx.shadowBlur = 20;
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.fillText(document.getElementById('cv-text').value, 400, 220);
             },
-
-            download() {
+            export() {
                 const link = document.createElement('a');
-                link.download = 'discord_assets.png';
-                link.href = this.canvas.toDataURL();
+                link.download = 'discord_asset.png';
+                link.href = document.getElementById('main-cv').toDataURL();
                 link.click();
             }
         };
 
-        const permManager = {
-            perms: [
-                {n:"Administrator", v:0x8n, color: "text-red-400"},
-                {n:"Manage Guild", v:0x20n}, {n:"Manage Roles", v:0x10000000n}, {n:"Manage Channels", v:0x10n},
-                {n:"Kick Members", v:0x2n}, {n:"Ban Members", v:0x4n}, {n:"Create Invite", v:0x1n},
-                {n:"Change Nickname", v:0x4000000n}, {n:"Manage Nicknames", v:0x8000000n},
-                {n:"Manage Emojis", v:0x40000000n}, {n:"Manage Webhooks", v:0x20000000n},
-                {n:"View Channels", v:0x400n}, {n:"Send Messages", v:0x800n}, {n:"Send TTS", v:0x1000n},
-                {n:"Manage Messages", v:0x2000n}, {n:"Embed Links", v:0x4000n}, {n:"Attach Files", v:0x8000n},
-                {n:"Read History", v:0x10000n}, {n:"Mention Everyone", v:0x20000n}, {n:"Use External Emojis", v:0x40000n},
-                {n:"Add Reactions", v:0x40n}, {n:"Connect", v:0x100000n}, {n:"Speak", v:0x200000n},
-                {n:"Stream", v:0x200n}, {n:"Mute Members", v:0x400000n}, {n:"Deafen Members", v:0x800000n},
-                {n:"Move Members", v:0x1000000n}, {n:"Use VAD", v:0x2000000n}, {n:"Priority Speaker", v:0x100n}
+        const Perms = {
+            list: [
+                {n:"Administrator", v:0x8n}, {n:"Manage Guild", v:0x20n}, {n:"Manage Roles", v:0x10000000n},
+                {n:"Manage Channels", v:0x10n}, {n:"Kick Members", v:0x2n}, {n:"Ban Members", v:0x4n},
+                {n:"Manage Messages", v:0x2000n}, {n:"View Channels", v:0x400n}, {n:"Send Messages", v:0x800n}
             ],
-
             init() {
                 const grid = document.getElementById('perm-grid');
-                this.perms.forEach(p => {
-                    const el = document.createElement('label');
-                    el.className = "flex items-center space-x-2 cursor-pointer p-2 rounded hover:bg-[#35373c] transition";
-                    el.innerHTML = `
-                        <input type="checkbox" value="${p.v}" class="perm-cb accent-[#5865f2] w-4 h-4 rounded">
-                        <span class="${p.color || 'text-gray-300'} font-medium text-xs">${p.n}</span>
-                    `;
-                    grid.appendChild(el);
-                });
-                
-                document.querySelectorAll('.perm-cb').forEach(cb => {
-                    cb.addEventListener('change', () => this.calc());
+                this.list.forEach(p => {
+                    const label = document.createElement('label');
+                    label.className = "glass p-4 flex items-center gap-3 cursor-pointer hover:bg-white/10 transition";
+                    label.innerHTML = `<input type="checkbox" value="${p.v}" class="p-cb w-5 h-5 accent-purple-500"> <span class="text-sm">${p.n}</span>`;
+                    label.querySelector('input').addEventListener('change', () => this.calc());
+                    grid.appendChild(label);
                 });
             },
-
             calc() {
                 let total = 0n;
-                document.querySelectorAll('.perm-cb:checked').forEach(cb => total += BigInt(cb.value));
-                document.getElementById('perm-value').value = total.toString();
+                document.querySelectorAll('.p-cb:checked').forEach(c => total += BigInt(c.value));
+                document.getElementById('perm-res').innerText = total.toString();
             },
-
             decode() {
-                const valStr = document.getElementById('perm-decoder').value;
-                if (!valStr) return;
-                try {
-                    const val = BigInt(valStr);
-                    document.querySelectorAll('.perm-cb').forEach(cb => {
-                        const bit = BigInt(cb.value);
-                        cb.checked = (val & bit) === bit;
-                    });
-                    this.calc();
-                } catch(e) { alert('Invalid Integer'); }
-            },
-
-            generateLink() {
-                const id = document.getElementById('client-id').value;
-                if (!id) return alert('Enter Client ID');
-                const perm = document.getElementById('perm-value').value;
-                const url = `https://discord.com/oauth2/authorize?client_id=${id}&permissions=${perm}&scope=bot%20applications.commands`;
-                const out = document.getElementById('invite-output');
-                out.innerText = url;
-                out.classList.remove('hidden');
+                const val = BigInt(document.getElementById('perm-dec').value || 0);
+                document.querySelectorAll('.p-cb').forEach(c => c.checked = (val & BigInt(c.value)) === BigInt(c.value));
+                this.calc();
             }
         };
 
-        const utils = {
-            copy(text) {
-                if(!text) return;
-                navigator.clipboard.writeText(text);
-                alert('Copied to clipboard!');
-            },
-            
-            generateTimestamp() {
-                const val = document.getElementById('ts-input').value;
-                const fmt = document.getElementById('ts-format').value;
-                if (!val) return;
-                const unix = Math.floor(new Date(val).getTime() / 1000);
-                document.getElementById('ts-result').innerText = `<t:${unix}:${fmt}>`;
+        const Utils = {
+            copyTS() {
+                const date = document.getElementById('ts-in').value;
+                if(!date) return;
+                const unix = Math.floor(new Date(date).getTime() / 1000);
+                const type = document.getElementById('ts-type').value;
+                const code = `<t:${unix}:${type}>`;
+                navigator.clipboard.writeText(code);
+                document.getElementById('ts-res').innerText = code;
             }
         };
 
-        //すたーと
-        window.onload = () => app.init();
-
+        window.onload = () => App.init();
     </script>
 </body>
 </html>
